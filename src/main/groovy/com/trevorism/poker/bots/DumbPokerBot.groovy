@@ -85,7 +85,7 @@ class DumbPokerBot implements PlayerAction {
 
     boolean canCheck(GameState gameState) {
         int currentBet = gameState.getPots().currentBet
-        if(currentBet == 0)
+        if(currentBet == 0 || gameState.getTable().getActivePlayersSize() == 1)
             return true
         return false
     }
