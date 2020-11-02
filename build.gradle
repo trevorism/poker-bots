@@ -1,0 +1,16 @@
+
+apply plugin: 'groovy'
+
+repositories {
+	mavenCentral()
+	maven {
+		url uri("http://trevorism-build.eastus.cloudapp.azure.com/nexus/repository/maven-releases")
+	}
+}
+
+dependencies {
+	implementation 'org.codehaus.groovy:groovy-all:3.0.6'
+	implementation 'com.trevorism:Poker:1.0.0'
+	testImplementation 'junit:junit:4.13.1'
+}
+
