@@ -1,5 +1,6 @@
 package com.trevorism.poker
 
+
 import com.brooks.poker.game.PokerGame
 import com.brooks.poker.game.data.BlindsAnte
 import com.brooks.poker.game.data.GameState
@@ -22,7 +23,6 @@ class PlayGame {
             gameState.addGameStateHandler(adaptor)
 
             PokerGame.playGame(gameState)
-            gameState = null
         }
     }
 }

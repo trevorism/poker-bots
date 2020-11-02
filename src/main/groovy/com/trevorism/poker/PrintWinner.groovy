@@ -6,16 +6,19 @@ import com.brooks.poker.player.Player
 
 class PrintWinner extends GameStateHandlerAdaptor {
 
+    int i = 0;
+
+    void handleEndHandState(GameState gameState) {
+        i++
+    }
+
     @Override
     void handleEndGameState(GameState gameState) {
+        print "Hand count: $i :: "
         printPlayer(gameState.table.sortedActivePlayers[0])
     }
 
     private void printPlayer(Player player){
-        print "${player} :: "
-        player.hand.cards.each {
-            print "${it}, "
-        }
-        println player.hand.handValue
+        println player
     }
 }
