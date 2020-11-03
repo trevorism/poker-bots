@@ -15,7 +15,19 @@ class PrintWinner extends GameStateHandlerAdaptor {
     @Override
     void handleEndGameState(GameState gameState) {
         print "Hand count: $i :: "
-        printPlayer(gameState.table.sortedActivePlayers[0])
+        printPlayer(gameState.table.allPlayers[0])
+
+        if(i == 1){
+            println ""
+            println "------------------------"
+            println gameState.gamePhase
+            println gameState.table.allPlayers.each {
+                println(it.toString() + " " + it.hand)
+            }
+            println gameState.pots.pots
+            println "------------------------"
+
+        }
     }
 
     private void printPlayer(Player player){

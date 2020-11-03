@@ -6,6 +6,7 @@ import com.brooks.poker.game.data.BlindsAnte
 import com.brooks.poker.game.data.GameState
 import com.brooks.poker.player.Player
 import com.brooks.poker.player.action.AlwaysCallPlayerAction
+import com.trevorism.poker.bots.ChaosPokerBot
 import com.trevorism.poker.bots.DumbPokerBot
 
 class PlayGame {
@@ -15,7 +16,7 @@ class PlayGame {
             Player trevor = new Player("Trevor", 500, new DumbPokerBot())
             Player vaughn = new Player("Vaughn", 500, new AlwaysCallPlayerAction())
             Player brooks = new Player("Brooks", 500, new AlwaysCallPlayerAction())
-            Player sean = new Player("sean", 500, new AlwaysCallPlayerAction())
+            Player sean = new Player("sean", 500, new ChaosPokerBot())
             List<Player> players = [trevor, vaughn, brooks, sean]
 
             GameState gameState = GameState.configureTournamentGameState(BlindsAnte.STANDARD_TOURNAMENT, players)

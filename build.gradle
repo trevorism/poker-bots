@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
 	implementation 'org.codehaus.groovy:groovy-all:3.0.6'
-	implementation 'com.trevorism:poker:1.1.0-rc4'
+	implementation 'com.trevorism:poker:1.2.0'
 	testImplementation 'junit:junit:4.13.1'
 }
 
