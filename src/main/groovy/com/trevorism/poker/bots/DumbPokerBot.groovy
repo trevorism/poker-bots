@@ -18,13 +18,13 @@ class DumbPokerBot implements PlayerAction {
             return computePreflopAction(player, canCheck, gameState)
         }
 
-        if(gameState.getCommunityCards().getCards().size() == 3){
+        if (gameState.getCommunityCards().getCards().size() == 3) {
             return computeFlopAction(player, gameState, canCheck)
         }
-        if(gameState.getCommunityCards().getCards().size() == 4){
+        if (gameState.getCommunityCards().getCards().size() == 4) {
             return computeTurnAction(player, gameState, canCheck)
         }
-        if(gameState.getCommunityCards().getCards().size() == 5){
+        if (gameState.getCommunityCards().getCards().size() == 5) {
             return computeRiverAction(player, gameState, canCheck)
         }
 
@@ -50,30 +50,30 @@ class DumbPokerBot implements PlayerAction {
     }
 
     private BettingOutcome computeFlopAction(Player player, GameState gameState, boolean canCheck) {
-        if (player.getHand().handValue.type > HandValue.HandValueType.HIGH_CARD) {
-            return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState))
+        if (player.getHand().handValue.type >= HandValue.HandValueType.THREE_OF_A_KIND) {
+            return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 4)
         }
-        if (player.getHand().handValue.type > HandValue.HandValueType.TWO_PAIR) {
+        if (player.getHand().handValue.type >= HandValue.HandValueType.TWO_PAIR) {
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 2)
         }
-        if (player.getHand().handValue.type > HandValue.HandValueType.THREE_OF_A_KIND) {
-            return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 4)
+        if (player.getHand().handValue.type > HandValue.HandValueType.HIGH_CARD) {
+            return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState))
         }
         return defaultBettingAction(canCheck)
     }
 
     BettingOutcome computeTurnAction(Player player, GameState gameState, boolean canCheck) {
-        if (player.getHand().handValue.type > HandValue.HandValueType.TWO_PAIR) {
-            return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState))
-        }
-        if (player.getHand().handValue.type > HandValue.HandValueType.THREE_OF_A_KIND) {
+        if (player.getHand().handValue.type >= HandValue.HandValueType.THREE_OF_A_KIND) {
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 2)
+        }
+        if (player.getHand().handValue.type >= HandValue.HandValueType.TWO_PAIR) {
+            return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState))
         }
         return defaultBettingAction(canCheck)
     }
 
     BettingOutcome computeRiverAction(Player player, GameState gameState, boolean canCheck) {
-        if (player.getHand().handValue.type > HandValue.HandValueType.FULL_HOUSE) {
+        if (player.getHand().handValue.type >= HandValue.HandValueType.FULL_HOUSE) {
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 6)
         }
         return BettingOutcomeFactory.createCallOutcome()
@@ -85,7 +85,7 @@ class DumbPokerBot implements PlayerAction {
 
     boolean canCheck(GameState gameState) {
         int currentBet = gameState.getPots().currentBet
-        if(currentBet == 0 || gameState.getTable().getActivePlayersSize() == 1)
+        if (currentBet == 0 || gameState.getTable().getActivePlayersSize() == 1)
             return true
         return false
     }
