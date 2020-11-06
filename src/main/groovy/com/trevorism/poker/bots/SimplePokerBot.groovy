@@ -41,11 +41,11 @@ class SimplePokerBot implements PlayerAction {
 
     private BettingOutcome computePreflopAction(Player player, boolean canCheck, GameState gameState) {
         PreflopScore preflopScore = new PreflopScore(player.getHand().getCards())
-        if (preflopScore.score < 25 && !canCheck)
+        if (preflopScore.score < 45 && !canCheck)
             return BettingOutcomeFactory.createFoldOutcome()
-        if (preflopScore.score > 80)
+        if (preflopScore.score > 84)
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 5)
-        if (preflopScore.score > 50)
+        if (preflopScore.score > 65)
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 2)
         return BettingOutcomeFactory.createCallOutcome()
     }
@@ -103,9 +103,9 @@ class SimplePokerBot implements PlayerAction {
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 3)
         }
         if (player.getHand().getHandValue().type == HandValue.HandValueType.HIGH_CARD && !canCheck) {
-            BettingOutcomeFactory.createCallOutcome()
+            return BettingOutcomeFactory.createFoldOutcome()
         }
-        return BettingOutcomeFactory.createFoldOutcome()
+        return BettingOutcomeFactory.createCallOutcome()
     }
 
     private static boolean isPreFlop(Player player) {

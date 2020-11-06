@@ -26,7 +26,7 @@ class PlayGame {
             Player vaughn1 = new Player("Vaughn1", chipCount, new AlwaysCallPlayerAction())
             Player brooks1 = new Player("Brooks1", chipCount, new SimplePokerBot())
             Player sean1 = new Player("Sean1", chipCount, new ChaosPokerBot())
-            players = [trevor, vaughn, brooks, sean, trevor1, vaughn1, brooks1, sean1]
+            players = [trevor, trevor1, vaughn, vaughn1, brooks, brooks1, sean, sean1]
 
 
             GameState gameState = GameState.configureTournamentGameState(BlindsAnte.STANDARD_TOURNAMENT, players)
