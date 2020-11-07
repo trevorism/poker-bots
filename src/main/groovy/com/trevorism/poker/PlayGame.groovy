@@ -13,7 +13,7 @@ class PlayGame {
 
     static void main(String[] args) {
         def adaptor = new PrintWinner()
-        int chipCount = 600
+        int chipCount = 1000
 
         50.times {
             Player trevor = new Player("Trevor", chipCount, new DumbPokerBot())
@@ -22,11 +22,11 @@ class PlayGame {
             Player sean = new Player("Sean", chipCount, new ChaosPokerBot())
             List<Player> players = [trevor, vaughn, brooks, sean]
 
-            Player trevor1 = new Player("Trevor1", chipCount, new DumbPokerBot())
-            Player vaughn1 = new Player("Vaughn1", chipCount, new AlwaysCallPlayerAction())
-            Player brooks1 = new Player("Brooks1", chipCount, new SimplePokerBot())
-            Player sean1 = new Player("Sean1", chipCount, new ChaosPokerBot())
-            players = [trevor, trevor1, vaughn, vaughn1, brooks, brooks1, sean, sean1]
+//            Player trevor1 = new Player("Trevor1", chipCount, new DumbPokerBot())
+//            Player vaughn1 = new Player("Vaughn1", chipCount, new AlwaysCallPlayerAction())
+//            Player brooks1 = new Player("Brooks1", chipCount, new SimplePokerBot())
+//            Player sean1 = new Player("Sean1", chipCount, new ChaosPokerBot())
+//            players = [trevor, trevor1, vaughn, vaughn1, brooks, brooks1, sean, sean1]
 
 
             GameState gameState = GameState.configureTournamentGameState(BlindsAnte.STANDARD_TOURNAMENT, players)

@@ -1,5 +1,6 @@
 package com.trevorism.poker.bots
 
+import com.brooks.poker.cards.Hand
 import com.brooks.poker.cards.HandValue
 import com.brooks.poker.game.GameActions
 import com.brooks.poker.game.data.GameState
@@ -8,6 +9,7 @@ import com.brooks.poker.outcome.BettingOutcomeFactory
 import com.brooks.poker.player.Player
 import com.brooks.poker.player.action.PlayerAction
 import com.trevorism.poker.hand.HandCalculationUtils
+import com.trevorism.poker.hand.PreflopScore
 
 class SimplePokerBot implements PlayerAction {
 
@@ -41,11 +43,12 @@ class SimplePokerBot implements PlayerAction {
 
     private BettingOutcome computePreflopAction(Player player, boolean canCheck, GameState gameState) {
         PreflopScore preflopScore = new PreflopScore(player.getHand().getCards())
-        if (preflopScore.score < 45 && !canCheck)
+        int numberOfPlayers = gameState.getTable().getActivePlayersSize()
+        if (preflopScore.score < 26 + 4 * numberOfPlayers && !canCheck)
             return BettingOutcomeFactory.createFoldOutcome()
-        if (preflopScore.score > 84)
+        if (preflopScore.score > 66 + 4 * numberOfPlayers)
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 5)
-        if (preflopScore.score > 65)
+        if (preflopScore.score > 46 + 4 * numberOfPlayers && gameState.pots.getCurrentBet() == gameState.getBlindsAnte().bigBlind)
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 2)
         return BettingOutcomeFactory.createCallOutcome()
     }
@@ -101,6 +104,10 @@ class SimplePokerBot implements PlayerAction {
         }
         if (player.getHand().getHandValue().type == HandValue.HandValueType.STRAIGHT) {
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 3)
+        }
+        Hand communityHand = new Hand(gameState.getCommunityCards().cards)
+        if (communityHand.handValue.type == player.getHand().handValue.type && !canCheck) {
+            return BettingOutcomeFactory.createFoldOutcome()
         }
         if (player.getHand().getHandValue().type == HandValue.HandValueType.HIGH_CARD && !canCheck) {
             return BettingOutcomeFactory.createFoldOutcome()

@@ -1,5 +1,6 @@
 package com.trevorism.poker.bots
 
+import com.brooks.poker.cards.Hand
 import com.brooks.poker.cards.HandValue
 import com.brooks.poker.game.GameActions
 import com.brooks.poker.game.data.GameState
@@ -7,6 +8,7 @@ import com.brooks.poker.outcome.BettingOutcome
 import com.brooks.poker.outcome.BettingOutcomeFactory
 import com.brooks.poker.player.Player
 import com.brooks.poker.player.action.PlayerAction
+import com.trevorism.poker.hand.PreflopScore
 
 class DumbPokerBot implements PlayerAction {
 
@@ -73,8 +75,14 @@ class DumbPokerBot implements PlayerAction {
     }
 
     BettingOutcome computeRiverAction(Player player, GameState gameState, boolean canCheck) {
+
         if (player.getHand().handValue.type >= HandValue.HandValueType.FULL_HOUSE) {
             return BettingOutcomeFactory.createRaiseOutcome(GameActions.getMinBet(gameState) * 6)
+        }
+        Hand communityHand = new Hand(gameState.getCommunityCards().cards)
+
+        if(communityHand.handValue.type == player.getHand().handValue.type && !canCheck) {
+            return BettingOutcomeFactory.createFoldOutcome()
         }
         return BettingOutcomeFactory.createCallOutcome()
     }

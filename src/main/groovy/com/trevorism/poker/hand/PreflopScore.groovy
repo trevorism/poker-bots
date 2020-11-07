@@ -1,4 +1,4 @@
-package com.trevorism.poker.bots
+package com.trevorism.poker.hand
 
 import com.brooks.poker.cards.Card
 
@@ -17,7 +17,7 @@ class PreflopScore {
 
         //Suited
         if(cards[0].suit == cards[1].suit){
-            score += 25
+            score += 22
         }
 
 
@@ -27,8 +27,10 @@ class PreflopScore {
         if (card.value == Card.Value.ACE) {
             score += 30
         } else if (card.value == Card.Value.KING) {
-            score += 20
+            score += 25
         } else if (card.value == Card.Value.QUEEN) {
+            score += 20
+        } else if (card.value == Card.Value.JACK) {
             score += 15
         } else {
             score += card.value.ordinal()
@@ -46,7 +48,7 @@ class PreflopScore {
             score += 8
         }
         if (Math.abs(cards[0].value.ordinal() - cards[1].value.ordinal()) == 1) {
-            score += 18
+            score += 16
         }
         if (Math.abs(cards[0].value.ordinal() - cards[1].value.ordinal()) == 0) {
             score += 60
