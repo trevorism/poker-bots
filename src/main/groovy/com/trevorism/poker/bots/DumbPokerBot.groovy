@@ -40,7 +40,7 @@ class DumbPokerBot implements PlayerAction {
         return BettingOutcomeFactory.createFoldOutcome()
     }
 
-    private BettingOutcome computePreflopAction(Player player, boolean canCheck, GameState gameState) {
+    private static BettingOutcome computePreflopAction(Player player, boolean canCheck, GameState gameState) {
         PreflopScore preflopScore = new PreflopScore(player.getHand().getCards())
         if (preflopScore.score < 30 && !canCheck)
             return BettingOutcomeFactory.createFoldOutcome()
@@ -93,7 +93,7 @@ class DumbPokerBot implements PlayerAction {
 
     boolean canCheck(GameState gameState) {
         int currentBet = gameState.getPots().currentBet
-        if (currentBet == 0 || gameState.getTable().getActivePlayersSize() == 1)
+        if (currentBet == 0 || gameState.getTable().getAllPlayers().size() - gameState.getTable().getSortedActivePlayers().size() == 1)
             return true
         return false
     }

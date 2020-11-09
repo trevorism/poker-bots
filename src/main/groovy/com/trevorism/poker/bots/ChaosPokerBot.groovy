@@ -31,7 +31,7 @@ class ChaosPokerBot implements PlayerAction {
 
     boolean canCheck(GameState gameState) {
         int currentBet = gameState.getPots().currentBet
-        if(currentBet == 0 || gameState.getTable().getActivePlayersSize() == 1)
+        if (currentBet == 0 || gameState.getTable().getAllPlayers().size() - gameState.getTable().getSortedActivePlayers().size() == 1)
             return true
         return false
     }
